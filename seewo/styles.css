@@ -1,10 +1,11 @@
+/* ==================== 全局变量定义 ==================== */
 :root {
-    --primary-color: #26b3e6;
-    --secondary-color: #1a9bc8;
-    --text-color: #ffffff;
-    --text-dark: #333333;
-    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --transition: all 0.3s ease;
+    --primary-color: #ffffff;    /* 主背景颜色 */
+    --secondary-color: #ffffff;  /* 辅助颜色（边框/装饰元素） */
+    --text-color: #000000;       /* 主要文本颜色 */
+    --text-dark: #000000;        /* 深色模式文本备用色 */
+    --shadow: 0 4px 6px rgb(0, 0, 0); /* 通用阴影效果 */
+    --transition: all 0.3s ease; /* 过渡动画效果 */
 }
 
 * {
@@ -28,8 +29,15 @@ body {
     min-height: 100vh;
 }
 
-/* 侧边栏样式 */
+/* ==================== 侧边栏样式 ==================== */
 .sidebar {
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--text-color);
+    .nav-links a,
+    .nav-links button {
+        background: rgba(0, 0, 0, 0.05);
+    } /* 半透明背景 */
+    backdrop-filter: blur(10px);           /* 毛玻璃效果 */
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
@@ -95,8 +103,8 @@ body {
 
 .nav-links ul li a:hover,
 .nav-links ul li button:hover {
-    transform: translateX(5px);
-    background: rgba(255, 255, 255, 0.3);
+    transform: translateX(5px);    /* 悬停右移效果 */
+    background: rgba(255, 255, 255, 0.3); /* 悬停背景加深 */
 }
 
 .sidebar-footer {
@@ -118,7 +126,7 @@ body {
 }
 
 .header {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(5px);
     border-radius: 12px;
     padding: 20px 25px;
@@ -157,7 +165,7 @@ body {
 }
 
 .search-box input::placeholder {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(0, 0, 0, 0.5); /* 调整为半透明黑色 */
 }
 
 .search-box button {
@@ -222,7 +230,12 @@ body {
 }
 
 .content-module {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.95);
+    h2,
+    .content-text,
+    .read-more {
+        color: var(--text-color);
+    }
     backdrop-filter: blur(5px);
     border-radius: 12px;
     padding: 25px;
@@ -251,7 +264,7 @@ body {
 }
 
 .content-text {
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--text-color);
     margin-bottom: 20px;
     font-size: 15px;
     line-height: 1.7;
@@ -304,7 +317,7 @@ body {
 /* 响应式设计 */
 @media (max-width: 768px) {
     .container {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* 移动端单列布局 */
     }
 
     .sidebar {
@@ -350,7 +363,12 @@ body {
 
 /* 文章容器 */
 .article-container {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.95);
+    .article-title,
+    .article-meta,
+    .article-content {
+        color: var(--text-color);
+    }
     backdrop-filter: blur(5px);
     border-radius: 12px;
     padding: 30px;
@@ -494,8 +512,8 @@ table th, table td {
 }
 
 table th {
-    background: rgba(255, 255, 255, 0.2);
-    font-weight: 600;
+    background: rgba(255, 255, 255, 0.2); /* 表头背景色 */
+    font-weight: 600; /* 加粗字体 */
 }
 
 /* 六顶思考帽 */
@@ -530,7 +548,7 @@ table th {
 .hat.black i { color: #333; }
 .hat.yellow i { color: #feca57; }
 .hat.green i { color: #1dd1a1; }
-.hat.blue i { color: #54a0ff; }
+.hat.blue i { color: #ffffff; }
 
 /* 图片画廊 */
 .article-gallery {
@@ -560,19 +578,17 @@ table th {
     margin: 30px 0;
 }
 
-/* ==================== 解决方案卡片 ==================== */
 .solution {
     display: flex;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     padding: 15px;
-    transition: transform 0.3s ease;
+    transition: var(--transition);
 }
 
 .solution:hover {
     background: rgba(255, 255, 255, 0.15);
     transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .solution-icon {
@@ -760,7 +776,13 @@ table th {
 
 /* 评论区域 */
 .comments-section {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.95);
+    .comment-count,
+    .comment-form textarea,
+    .like-btn,
+    .reply-btn {
+        color: var(--text-color);
+    }
     backdrop-filter: blur(5px);
     border-radius: 12px;
     padding: 30px;
@@ -795,7 +817,6 @@ table th {
     flex-grow: 1;
 }
 
-/* ==================== 评论表单 ==================== */
 .comment-form textarea {
     width: 100%;
     height: 100px;
@@ -1018,7 +1039,6 @@ table th {
 }
 
 /* 灯箱样式 */
-/* ==================== 灯箱效果 ==================== */
 .lightbox {
     position: fixed;
     top: 0;
