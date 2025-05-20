@@ -9,7 +9,7 @@ exports.handler = async function (event, context) {
     }
 
     const { 'h-captcha-response': captchaResponse } = JSON.parse(event.body);
-    const secretKey = 'YOUR_SECRET_KEY';
+    const secretKey = '0d1c4cf0-bac4-4aae-b6fc-2024b9d24952';
 
     const verificationUrl = `https://hcaptcha.com/siteverify?secret=${secretKey}&response=${captchaResponse}`;
 
