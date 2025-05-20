@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -82,6 +83,7 @@
     </style>
     <script src="https://hcaptcha.com/1/api.js" async defer></script>
 </head>
+
 <body class="bg-gray-100 font-sans">
     <!-- 新增人机验证模态框 -->
     <div id="captcha-modal">
@@ -180,7 +182,7 @@
                         <a href="#" class="text-gray-500 hover:text-blue-500"><i class="fab fa-github"></i></a>
                     </div>
                     <!-- 修改后的人机验证表单 -->
-                    <form id="contactForm" action="/submit" method="POST"> 
+                    <form id="contactForm" action="/submit" method="POST">
                         <div>
                             <label for="name">姓名：</label>
                             <input type="text" id="name" name="name" required>
@@ -217,6 +219,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // 人机验证相关逻辑
             const captchaModal = document.getElementById('captcha-modal');
             const mainContent = document.getElementById('main-content');
             const verifyButton = document.getElementById('verify-button');
@@ -224,7 +227,7 @@
             verifyButton.addEventListener('click', function () {
                 // 获取 hCaptcha 响应（token）
                 const captchaResponse = hcaptcha.getResponse();
-                
+
                 if (!captchaResponse) {
                     alert('请完成人机验证');
                     return;
@@ -238,25 +241,25 @@
                     },
                     body: JSON.stringify({ 'h-captcha-response': captchaResponse })
                 })
-               .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-               .then(data => {
-                    if (data.success) {
-                        // 验证通过，隐藏模态框，显示网页内容
-                        captchaModal.style.display = 'none';
-                        mainContent.style.display = 'block';
-                    } else {
-                        alert('验证失败，请重试');
-                    }
-                })
-               .catch(error => {
-                    console.error('Error:', error);
-                    alert('提交失败，请稍后再试');
-                });
+                   .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                   .then(data => {
+                        if (data.success) {
+                            // 验证通过，隐藏模态框，显示网页内容
+                            captchaModal.style.display = 'none';
+                            mainContent.style.display = 'block';
+                        } else {
+                            alert('验证失败，请重试');
+                        }
+                    })
+                   .catch(error => {
+                        console.error('Error:', error);
+                        alert('提交失败，请稍后再试');
+                    });
             });
 
             // 侧边栏相关逻辑
@@ -289,48 +292,49 @@
             window.addEventListener('resize', handleButtonVisibility);
 
             handleButtonVisibility();
-        });
 
-        // 表单提交逻辑
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+            // 表单提交逻辑
+            document.getElementById('contactForm').addEventListener('submit', function (e) {
+                e.preventDefault();
 
-            // 检查 hCaptcha 是否已完成
-            const captchaResponse = hcaptcha.getResponse();
+                // 检查 hCaptcha 是否已完成
+                const captchaResponse = hcaptcha.getResponse();
 
-            if (!captchaResponse) {
-                alert('请完成人机验证');
-                return;
-            }
-
-            // 构建表单数据
-            const formData = new FormData(this);
-            formData.append('h-captcha-response', captchaResponse);
-
-            // 发送到后端
-            fetch('/.netlify/functions/submit-form', {
-                method: 'POST',
-                body: formData
-            })
-           .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                if (!captchaResponse) {
+                    alert('请完成人机验证');
+                    return;
                 }
-                return response.json();
-            })
-           .then(data => {
-                if (data.success) {
-                    alert('提交成功！');
-                    this.reset();
-                } else {
-                    alert('验证失败，请重试');
-                }
-            })
-           .catch(error => {
-                console.error('Error:', error);
-                alert('提交失败，请稍后再试');
+
+                // 构建表单数据
+                const formData = new FormData(this);
+                formData.append('h-captcha-response', captchaResponse);
+
+                // 发送到后端
+                fetch('/.netlify/functions/submit-form', {
+                    method: 'POST',
+                    body: formData
+                })
+                   .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                   .then(data => {
+                        if (data.success) {
+                            alert('提交成功！');
+                            this.reset();
+                        } else {
+                            alert('验证失败，请重试');
+                        }
+                    })
+                   .catch(error => {
+                        console.error('Error:', error);
+                        alert('提交失败，请稍后再试');
+                    });
             });
         });
     </script>
 </body>
+
 </html>
