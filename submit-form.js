@@ -1,5 +1,5 @@
 const { hCaptcha } = require('h-captcha');
-const secretKey = 'your_secret_key'; // 替换为你的 hCaptcha secret key
+const secretKey = '0d1c4cf0-bac4-4aae-b6fc-2024b9d24952'; // 替换为你的 hCaptcha secret key
 const client = new hCaptcha(secretKey);
 
 exports.handler = async function(event) {
