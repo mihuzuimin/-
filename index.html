@@ -324,7 +324,7 @@
                 formData.append('h-captcha-response', captchaResponse);
 
                 // 发送到后端
-                fetch('/.netlify/functions/submit-form', {
+                fetch('/submit-form', {
                     method: 'POST',
                     body: formData
                 })
