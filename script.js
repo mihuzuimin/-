@@ -28,3 +28,44 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+// 添加在现有代码后面
+
+// hCaptcha验证处理
+document.addEventListener('DOMContentLoaded', function() {
+    const verifyButton = document.getElementById('verify-button');
+    const captchaModal = document.getElementById('captcha-modal');
+    const mainContent = document.getElementById('main-content');
+
+    verifyButton.addEventListener('click', function() {
+        // 获取hCaptcha响应
+        const hcaptchaResponse = hcaptcha.getResponse();
+        
+        if(hcaptchaResponse) {
+            // 验证成功，隐藏验证模态框，显示主内容
+            captchaModal.style.display = 'none';
+            mainContent.style.display = 'block';
+            
+            // 这里可以添加将验证响应发送到服务器的代码
+        } else {
+            alert('请先完成人机验证');
+        }
+    });
+
+    // 表单提交处理
+    const contactForm = document.getElementById('contactForm');
+    if(contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // 再次验证hCaptcha响应
+            if(!hcaptcha.getResponse()) {
+                alert('请先完成人机验证');
+                return false;
+            }
+            
+            // 验证通过，提交表单
+            this.submit();
+        });
+    }
+});
