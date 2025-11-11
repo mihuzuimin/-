@@ -240,8 +240,16 @@
                     }
                 }
 
+                // 在本地环境中，直接模拟成功响应
+                if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                    console.log('本地环境：模拟人机验证通过');
+                    captchaModal.style.display = 'none';
+                    mainContent.style.display = 'block';
+                    return;
+                }
+                
                 // 将 token 发送到后端验证
-                fetch('/.netlify/functions/submit-form', {
+                fetch('submit-form.js', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -319,14 +327,29 @@
                     }
                 }
 
-                // 构建表单数据
-                const formData = new FormData(this);
-                formData.append('h-captcha-response', captchaResponse);
-
+                // 构建JSON数据
+                const formData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    message: document.getElementById('message').value,
+                    'h-captcha-response': captchaResponse
+                };
+                
+                // 在本地环境中，直接模拟成功响应
+                if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                    console.log('本地环境：模拟表单提交成功', formData);
+                    alert('提交成功！');
+                    this.reset();
+                    return;
+                }
+                
                 // 发送到后端
-                fetch('/submit-form', {
+                fetch('submit-form.js', {
                     method: 'POST',
-                    body: formData
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
                 })
                    .then(response => {
                         if (!response.ok) {
